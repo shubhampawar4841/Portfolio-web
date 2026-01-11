@@ -175,13 +175,14 @@ export default function Page() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="relative w-full h-48 rounded-lg overflow-hidden border border-border">
+                <div className="relative w-full h-48 rounded-lg overflow-hidden border border-border bg-muted">
                   <Image
-                    src="https://media.licdn.com/dms/image/v2/D5622AQEtbzjsqBbfKQ/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1729362189059?e=1766620800&v=beta&t=mhy7m_tu3ifwH1baf-SKKqc4upwaU6Fgs9rYbAECxtg"
+                    src="/brave_9U6ZlkjXEu.png"
                     alt="LeetCode 500 Problems Solved"
                     width={400}
                     height={200}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    priority
                   />
                 </div>
               </CardContent>
@@ -201,13 +202,14 @@ export default function Page() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="relative w-full h-48 rounded-lg overflow-hidden border border-border">
+                <div className="relative w-full h-48 rounded-lg overflow-hidden border border-border bg-muted">
                   <Image
-                    src="https://media.licdn.com/dms/image/v2/D5622AQEeJvLoxA9YMg/feedshare-shrink_2048_1536/B56ZZZlXyNGoAo-/0/1745259692094?e=1766620800&v=beta&t=mLetXfAFAFpS-CcujSCtXhoISzBYO_hkQLuB2VeuNLg"
+                    src="/chrome_C3fGN3MXx3.png"
                     alt="GitHub Profile"
                     width={400}
                     height={200}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    priority
                   />
                 </div>
               </CardContent>
