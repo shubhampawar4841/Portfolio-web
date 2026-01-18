@@ -1,44 +1,11 @@
 "use client"
 
 import React from "react"
+import Image from "next/image"
+import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ExternalLink, Github, Globe, Code, Database, Brain } from "lucide-react"
-
-const projects = [
-  {
-    title: "Medium Clone",
-    description: "Architected and developed a scalable blogging platform using React.js, TypeScript, and Node.js. Implemented secure JWT authentication with Zod validation, optimized database operations using Prisma ORM and PostgreSQL connection pooling. Deployed microservices architecture on Cloudflare Workers for improved performance.",
-    tech: ["React.js", "TypeScript", "Node.js", "PostgreSQL", "Prisma", "JWT", "Zod"],
-    color: "from-purple-500/20 to-purple-600/20 border-purple-500/30",
-    icon: Globe,
-    github: "https://github.com/shubhampawar4841",
-    demo: "#",
-    category: "Full Stack",
-    date: "September 2024",
-  },
-  {
-    title: "Finora AI - Investment Platform",
-    description: "AI-driven SaaS platform for investment advisors. Built interactive trade timeline (entry/stop-loss/targets) with 100% data accuracy using shadcn/ui. Implemented secure Clerk authentication with RBAC/RLS policies. Created data visualization dashboards with P/L indicators and risk/reward ratios using Recharts.",
-    tech: ["Next.js", "TypeScript", "Supabase", "Clerk", "Recharts", "shadcn/ui", "PostgreSQL"],
-    color: "from-cyan-500/20 to-cyan-600/20 border-cyan-500/30",
-    icon: Database,
-    github: "https://github.com/shubhampawar4841",
-    demo: "#",
-    category: "Full Stack",
-    date: "March 2025 - Present",
-  },
-  {
-    title: "AI-Powered Applications (Raava)",
-    description: "Developed AI-powered applications using React Native and Cursor AI for enhanced development efficiency. Implemented web scraping solutions with Firecrawls to collect and process large-scale web data. Built voice agent interfaces and character AI browser experiences using cutting-edge AI technologies.",
-    tech: ["React Native", "Cursor AI", "Firecrawls", "Voice Agents", "Character AI Browser", "Node.js"],
-    color: "from-green-500/20 to-green-600/20 border-green-500/30",
-    icon: Brain,
-    github: "https://github.com/shubhampawar4841",
-    demo: "#",
-    category: "AI/ML",
-    date: "June 2024 - Present",
-  },
-]
+import { ExternalLink, Github, Code } from "lucide-react"
+import { projects } from "@/data/projects"
 
 const categories = ["All", "Full Stack", "AI/ML"]
 
@@ -93,10 +60,14 @@ export default function ProjectsPage() {
           {filteredProjects.map((project, index) => {
             const Icon = project.icon
             return (
-              <Card
-                key={index}
-                className={`bg-gradient-to-br ${project.color} border-2 hover:scale-[1.02] hover:shadow-xl transition-all duration-300 group h-full flex flex-col`}
+              <Link
+                key={project.id}
+                href={`/projects/${project.id}`}
+                className="block h-full"
               >
+                <Card
+                  className={`bg-gradient-to-br ${project.color} border-2 hover:scale-[1.02] hover:shadow-xl transition-all duration-300 group h-full flex flex-col cursor-pointer`}
+                >
                 <CardHeader>
                   <div className="flex items-start gap-3 mb-3">
                     <div className="p-2.5 rounded-lg bg-white/10 group-hover:bg-white/20 transition-colors border border-white/20 shrink-0">
@@ -115,9 +86,35 @@ export default function ProjectsPage() {
                   </div>
                 </CardHeader>
                 <CardContent className="flex-1 flex flex-col">
+                  {project.images && project.images.length > 0 && (
+                    <div className="mb-4 rounded-lg overflow-hidden border border-white/10">
+                      <Image
+                        src={project.images[0]}
+                        alt={project.title}
+                        width={400}
+                        height={200}
+                        className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                  )}
                   <CardDescription className="text-gray-300 text-sm leading-relaxed mb-4 flex-1">
                     {project.description}
                   </CardDescription>
+                  {project.features && project.features.length > 0 && (
+                    <div className="mb-4">
+                      <div className="text-xs text-gray-400 mb-2 font-semibold">Key Features:</div>
+                      <div className="flex flex-wrap gap-2">
+                        {project.features.map((feature, featureIndex) => (
+                          <span
+                            key={featureIndex}
+                            className="px-2 py-1 rounded bg-emerald-500/20 text-xs text-emerald-300 border border-emerald-500/30"
+                          >
+                            {feature}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                   <div className="space-y-4">
                     {project.date && (
                       <div className="text-xs text-gray-400 mb-2">Date: {project.date}</div>
@@ -137,6 +134,7 @@ export default function ProjectsPage() {
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
                         className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm"
                       >
                         <Github className="w-4 h-4" />
@@ -147,6 +145,7 @@ export default function ProjectsPage() {
                           href={project.demo}
                           target="_blank"
                           rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
                           className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm"
                         >
                           <ExternalLink className="w-4 h-4" />
@@ -157,6 +156,7 @@ export default function ProjectsPage() {
                   </div>
                 </CardContent>
               </Card>
+              </Link>
             )
           })}
         </div>

@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import Image from "next/image"
+import { useRef, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   Code,
@@ -13,6 +14,7 @@ import {
   ArrowRight,
   Sparkles,
   Trophy,
+  Play,
 } from "lucide-react"
 
 const stats = [
@@ -21,6 +23,47 @@ const stats = [
   { label: "DSA Problems Solved", value: "200+", icon: Sparkles },
   { label: "GitHub Repos", value: "50+", icon: Github },
 ]
+
+function TimelapseVideo() {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (video) {
+      // Ensure video plays and loops
+      video.play().catch((error) => {
+        console.log("Autoplay prevented:", error)
+      })
+      
+      // Handle video end to ensure looping
+      const handleEnded = () => {
+        video.currentTime = 0
+        video.play().catch(() => {})
+      }
+      
+      video.addEventListener('ended', handleEnded)
+      
+      return () => {
+        video.removeEventListener('ended', handleEnded)
+      }
+    }
+  }, [])
+
+  return (
+    <video
+      ref={videoRef}
+      className="w-full h-full object-cover"
+      autoPlay
+      loop
+      muted
+      playsInline
+      preload="auto"
+    >
+      <source src="/timelapse/1000038037.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  )
+}
 
 export default function Page() {
   return (
@@ -109,6 +152,26 @@ export default function Page() {
               </Card>
             )
           })}
+        </div>
+      </div>
+
+      {/* Timelapse Section */}
+      <div className="container mx-auto px-4 py-12 md:py-16">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center gap-4 mb-8">
+            <div className="p-3.5 rounded-xl bg-gradient-to-br from-pink-500/20 to-purple-600/20 border border-pink-500/30 shadow-lg">
+              <Play className="w-7 h-7 text-white" />
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Work Timelapse</h2>
+          </div>
+          <Card className="bg-card border-border overflow-hidden">
+            <CardContent className="p-0">
+              <div className="relative w-full aspect-video bg-gradient-to-br from-purple-500/10 to-pink-500/10">
+                <TimelapseVideo />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent pointer-events-none"></div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
 
